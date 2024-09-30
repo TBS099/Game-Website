@@ -13,7 +13,14 @@ gameScene.preload = function () {
     });
 
     //Load Enemy Sprites
+    //Archer
     this.load.spritesheet('enemy_archer', '.././assets/Enemies/Archer/Archer_Idle.png', {
+        frameWidth: 64,
+        frameHeight: 64
+    });
+
+    //Dual Wielder
+    this.load.spritesheet('enemy_dual_wielder', '.././assets/Enemies/Dual_Wielder/Dual_Wielder_Idle.png', {
         frameWidth: 64,
         frameHeight: 64
     });
@@ -22,13 +29,13 @@ gameScene.preload = function () {
 //Called once after the preload ends
 gameScene.create = function () {
     //Create Background
-    let bg = this.add.sprite(0, 0, 'level1');
-    bg.setScale(0.8);
+    this.bg = this.add.sprite(0, 0, 'level1');
+    this.bg.setScale(0.8);
     //Set Background in the center
     let gameWidth = this.sys.game.config.width;
     let gameHeight = this.sys.game.config.height;
 
-    bg.setPosition(gameWidth / 2, gameHeight / 2);
+    this.bg.setPosition(gameWidth / 2, gameHeight / 2);
 
     //Create Idle Animation for Player
     this.anims.create({
@@ -42,11 +49,12 @@ gameScene.create = function () {
     });
 
     // Add the player to the scene, make player larger and play the idle animation
-    let player = this.physics.add.sprite(100, 100, 'player');
-    player.x = 20 + (player.width / 2);
-    player.y = gameHeight - player.height - 10;
-    player.setScale(1.5);
-    player.play('idle');
+    this.player = this.physics.add.sprite(100, 100, 'player');
+    this.player.setDepth(1);
+    this.player.x = 20 + (this.player.width / 2);
+    this.player.y = gameHeight - this.player.height - 10;
+    this.player.setScale(1.5);
+    this.player.play('idle');
 };
 
 //Set Configuration of the game
@@ -55,7 +63,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 0 }, // No gravity
+            gravity: { y: 300 }, // No gravity
             debug: false // Optional for debugging
         }
     },
