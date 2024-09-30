@@ -63,8 +63,8 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 }, // No gravity
-            debug: false // Optional for debugging
+            gravity: { y: 300 },
+            debug: false
         }
     },
     scene: gameScene
