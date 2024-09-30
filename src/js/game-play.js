@@ -48,13 +48,25 @@ gameScene.create = function () {
         repeat: -1
     });
 
-    // Add the player to the scene, make player larger and play the idle animation
+    // Add the player to the scene
     this.player = this.physics.add.sprite(100, 100, 'player');
     this.player.setDepth(1);
+
+    //Set Player Position
     this.player.x = 20 + (this.player.width / 2);
     this.player.y = gameHeight - this.player.height - 10;
+
+    //Set Player Scale
     this.player.setScale(1.5);
+
+    //Play Idle Animation
     this.player.play('idle');
+
+    //Set Player Gravity
+    this.player.body.setGravityY(300);
+
+    //Prevent Player from leaving the screen
+    this.player.setCollideWorldBounds(true);
 };
 
 //Set Configuration of the game
@@ -63,7 +75,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 300 },
+            gravity: { y: 0 },
             debug: false
         }
     },
