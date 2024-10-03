@@ -47,6 +47,12 @@ gameScene.create = function () {
 
     this.physics.world.setBounds(0, 0, gameWidth, gameHeight);
 
+    //Setup Scorecard
+    var score = 0;
+    var scoreText;
+
+    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
+    scoreText.setDepth(2);
 
     //Create Background
     this.bg = this.add.sprite(0, 0, 'level1');
@@ -238,30 +244,30 @@ gameScene.create = function () {
     });
 
     // Add the Necromancer to the scene
-    this.necromancer = this.physics.add.sprite(100, 100, 'necromancer_idle');
-    this.necromancer.setDepth(1);
+    this.necromancer1 = this.physics.add.sprite(100, 100, 'necromancer_idle');
+    this.necromancer1.setDepth(1);
 
     //Set Necromancer Position
-    this.necromancer.x = 20 + (this.necromancer.width / 2);
-    this.necromancer.y = gameHeight - this.necromancer.height - 10;
+    this.necromancer1.x = 20 + (this.necromancer1.width / 2);
+    this.necromancer1.y = gameHeight - this.necromancer1.height - 10;
 
     //Set Necromancer Scale
-    this.necromancer.setScale(1.7);
+    this.necromancer1.setScale(1.7);
+    this.necromancer1.setBodySize(32, 64);
+    this.necromancer1.setOffset(32, 0);
+
 
     //Play Idle Animation
-    this.necromancer.play('necromancer_idle');
+    this.necromancer1.play('necromancer_idle');
 
     //Set Necromancer Gravity
-    this.necromancer.body.setGravityY(300);
+    this.necromancer1.body.setGravityY(300);
 
     //Set Colliders
-    this.physics.add.collider(this.necromancer, this.grassGroup);
+    this.physics.add.collider(this.necromancer1, this.grassGroup);
 
     //Prevent Necromancer from leaving the screen
-    this.necromancer.setCollideWorldBounds(true);
-
-    //Set Necromancer Body Size
-    this.necromancer.setOffset(0, -32);
+    this.necromancer1.setCollideWorldBounds(true);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 };
