@@ -8,8 +8,12 @@ var necromancer2;
 var paladin1;
 var paladin2;
 var bombs;
+var isAttacking = false;
+var isAttacked = false;
 var gameOver = false;
 var score = 0;
+var necromancers;
+var paladins;
 
 
 //Load assets
@@ -341,6 +345,9 @@ gameScene.create = function () {
     //Set Player Gravity
     player.body.setGravityY(400);
 
+    //Set Player Bounce
+    player.setBounce(0.5);
+
     //Set Colliders
     this.physics.add.collider(player, this.grassGroup);
 
@@ -403,9 +410,12 @@ gameScene.create = function () {
         repeat: 0
     });
 
+    //Create Necromancers Group
+    necromancers = this.physics.add.group();
+
     //NECROMANCER 1
     // Add the Necromancer to the scene
-    necromancer1 = this.physics.add.sprite(50, 100, 'necromancer_idle');
+    necromancer1 = this.physics.add.sprite(50, 130, 'necromancer_idle');
     necromancer1.setDepth(1);
 
     //Set Necromancer Scale
@@ -417,18 +427,15 @@ gameScene.create = function () {
     //Play Idle Animation
     necromancer1.play('necromancer_idle');
 
-    //Set Necromancer Gravity
-    necromancer1.body.setGravityY(300);
-
     //Set Colliders
     this.physics.add.collider(necromancer1, this.grassGroup);
 
-    //Prevent Necromancer from leaving the screen
-    necromancer1.setCollideWorldBounds(true);
+    //Add Necromancer to the Necromancers group
+    necromancers.add(necromancer1);
 
     //NECROMANCER 2
     // Add the Necromancer to the scene
-    necromancer2 = this.physics.add.sprite(gameWidth - 50, gameHeight - 250, 'necromancer_idle');
+    necromancer2 = this.physics.add.sprite(gameWidth - 50, gameHeight - 210, 'necromancer_idle');
     necromancer2.flipX = true;
     necromancer2.setDepth(1);
 
@@ -441,14 +448,19 @@ gameScene.create = function () {
     //Play Idle Animation
     necromancer2.play('necromancer_idle');
 
-    //Set Necromancer Gravity
-    necromancer2.body.setGravityY(300);
-
     //Set Colliders
     this.physics.add.collider(necromancer2, this.grassGroup);
 
-    //Prevent Necromancer from leaving the screen
-    necromancer2.setCollideWorldBounds(true);
+    //Add Necromancer to the Necromancers group
+    necromancers.add(necromancer2);
+
+    //Add properties to all paladins
+    necromancers.children.iterate((necromancer) => {
+        necromancer.setCollideWorldBounds(true);
+        necromancer.setGravityY(300);
+        necromancer.setBounce(0.2);
+        necromancer.health = 3;
+    });
 
     //PALADIN
     //Create Idle Animation for Paladin
@@ -506,6 +518,9 @@ gameScene.create = function () {
         repeat: 0
     });
 
+    //Create Paladins Group
+    paladins = this.physics.add.group();
+
     //PALADIN1
     // Add the Paladin to the scene
     paladin1 = this.physics.add.sprite(50, gameHeight - 350, 'paladin_idle');
@@ -526,8 +541,8 @@ gameScene.create = function () {
     //Set Colliders
     this.physics.add.collider(paladin1, this.grassGroup);
 
-    //Prevent Paladin from leaving the screen
-    paladin1.setCollideWorldBounds(true);
+    //Add Paladin to the Paladins group
+    paladins.add(paladin1);
 
     //PALADIN2
     // Add the Paladin to the scene
@@ -550,8 +565,44 @@ gameScene.create = function () {
     //Set Colliders
     this.physics.add.collider(paladin2, this.grassGroup);
 
-    //Prevent Paladin from leaving the screen
-    paladin2.setCollideWorldBounds(true);
+    //Add Paladin to the Paladins group
+    paladins.add(paladin2);
+
+    //Add properties to all paladins
+    paladins.children.iterate((paladin) => {
+        paladin.setCollideWorldBounds(true);
+        paladin.setGravityY(300);
+        paladin.setBounce(0.2);
+        paladin.health = 3;
+    });
+
+    //Add collider between player and Necromancers
+    this.physics.add.collider(player, necromancers, (player, necromancer) => {
+        if (isAttacking) {
+            necromancer.setVelocityX(0);
+            necromancer.play('necromancer_death');
+            score += 10;
+            scoreText.setText('Score: ' + score)
+        }
+        else if (isAttacked) {
+            player.setTint(0xff0000);
+            gameOver = true;
+        }
+    });
+
+    //Add collider between player and Paladins
+    this.physics.add.collider(player, paladins, (player, paladin) => {
+        if (isAttacking) {
+            paladin.setVelocityX(0);
+            paladin.play('paladin_death');
+            score += 10;
+            scoreText.setText('Score: ' + score)
+        }
+        else if (isAttacked) {
+            player.setTint(0xff0000);
+            gameOver = true;
+        }
+    });
 
     //BOMB
     //Add Bomb to the scene
@@ -561,6 +612,7 @@ gameScene.create = function () {
 
     //Inittialize Cursor Keys
     this.cursors = this.input.keyboard.createCursorKeys();
+    this.attackKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
     //Initialize bomb timer
     this.bombDropTimer = this.time.now;
@@ -568,6 +620,7 @@ gameScene.create = function () {
 
 gameScene.update = function (time, delta) {
 
+    console.log(isAttacking);
     //Check whether the player is dead
     if (gameOver) {
         //Check whether the player is on the ground
@@ -583,6 +636,7 @@ gameScene.update = function (time, delta) {
         return;
     }
     else {
+        player.setBodySize(32, 32);
         //Check whether keys are pressed
         if (this.cursors.left.isDown) {
             player.setOffset(26, 12);
@@ -590,7 +644,14 @@ gameScene.update = function (time, delta) {
             player.flipX = true;
 
             //If the player is not moving and running animation isn't playing, play the running animation
-            if (player.anims.currentAnim.key !== 'player_running') {
+            if (player.anims.currentAnim.key === 'player_attack') {
+                player.once('animationcomplete', () => {
+                    isAttacking = false;
+                    player.play('player_running');
+                });
+            }
+            else if (player.anims.currentAnim.key !== 'player_running') {
+                isAttacking = false;
                 player.play('player_running');
             }
         }
@@ -600,16 +661,24 @@ gameScene.update = function (time, delta) {
             player.flipX = false;
 
             //If the player is not moving and running animation isn't playing, play the running animation
-            if (player.anims.currentAnim.key !== 'player_running') {
+            if (player.anims.currentAnim.key === 'player_attack') {
+                player.once('animationcomplete', () => {
+                    isAttacking = false;
+                    player.play('player_running');
+                });
+            }
+            else if (player.anims.currentAnim.key !== 'player_running') {
+                isAttacking = false;
                 player.play('player_running');
             }
         }
         else {
             player.setOffset(16, 12);
             player.setVelocityX(0);
+            isAttacking = false;
 
-            //If the player is not moving and idle animation isn't playing, play the idle animation
-            if (player.anims.currentAnim.key !== 'player_idle') {
+            //If the player is not moving and idle or attack animation isn't playing, play the idle animation
+            if (player.anims.currentAnim.key !== 'player_idle' && player.anims.currentAnim.key !== 'player_attack') {
                 player.play('player_idle');
             }
         }
@@ -617,6 +686,22 @@ gameScene.update = function (time, delta) {
         //Check whether the player is on the ground and the up key is pressed
         if (this.cursors.up.isDown && player.body.touching.down) {
             player.setVelocityY(-360);
+        }
+
+        if (Phaser.Input.Keyboard.JustDown(this.attackKey) && !isAttacking) {
+            isAttacking = true;
+            player.setBodySize(64, 32);
+            player.setOffset(0, 0);
+
+            //If the player is attacking and  animation isn't playing, play the attack animation
+            if (player.anims.currentAnim.key !== 'player_attack') {
+                player.play('player_attack');
+            }
+
+            player.once('animationcomplete', () => {
+                isAttacking = false;
+                player.play('player_idle');
+            });
         }
 
         // Check if 5 seconds have passed since the last bomb drop
