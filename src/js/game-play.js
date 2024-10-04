@@ -1,6 +1,17 @@
 //Create a new scene
 let gameScene = new Phaser.Scene('Game');
 
+//Initialize variables
+var player;
+var necromancer1;
+var necromancer2;
+var paladin1;
+var paladin2;
+var bombs;
+var gameOver = false;
+var score = 0;
+
+
 //Load assets
 gameScene.preload = function () {
 
@@ -22,6 +33,12 @@ gameScene.preload = function () {
 
     //Running
     this.load.spritesheet('player_run', '.././assets/Player/Player_Run.png', {
+        frameWidth: 96,
+        frameHeight: 64
+    });
+
+    //Death
+    this.load.spritesheet('player_death', '.././assets/Player/Player_Death.png', {
         frameWidth: 96,
         frameHeight: 64
     });
@@ -52,6 +69,19 @@ gameScene.preload = function () {
         frameWidth: 128,
         frameHeight: 128
     });
+
+    //Bomb
+    this.load.image('bomb', '.././assets/Items/Bomb.png');
+
+    //Explosion
+    this.load.image('explosion1', '.././assets/Explosion/explosion1.png');
+    this.load.image('explosion2', '.././assets/Explosion/explosion2.png');
+    this.load.image('explosion3', '.././assets/Explosion/explosion3.png');
+    this.load.image('explosion4', '.././assets/Explosion/explosion4.png');
+    this.load.image('explosion5', '.././assets/Explosion/explosion5.png');
+    this.load.image('explosion6', '.././assets/Explosion/explosion6.png');
+    this.load.image('explosion7', '.././assets/Explosion/explosion7.png');
+    this.load.image('explosion8', '.././assets/Explosion/explosion8.png');
 };
 
 //Called once after the preload ends
@@ -62,7 +92,6 @@ gameScene.create = function () {
     this.physics.world.setBounds(0, 0, gameWidth, gameHeight);
 
     //Setup Scorecard
-    var score = 0;
     var scoreText;
 
     scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
@@ -189,6 +218,23 @@ gameScene.create = function () {
     this.physics.add.existing(grassRightBlock4, true);
     this.grassGroup.add(grassRightBlock4);
 
+    //Explosion Animation
+    this.anims.create({
+        key: 'explosion',
+        frames: [
+            { key: 'explosion1' },
+            { key: 'explosion2' },
+            { key: 'explosion3' },
+            { key: 'explosion4' },
+            { key: 'explosion5' },
+            { key: 'explosion6' },
+            { key: 'explosion7' },
+            { key: 'explosion8' }
+        ],
+        frameRate: 5,
+        repeat: 0
+    });
+
     //PLAYER
     //Create Idle Animation for Player
     this.anims.create({
@@ -212,30 +258,41 @@ gameScene.create = function () {
         repeat: -1
     });
 
+    //Create Death Animation for Player
+    this.anims.create({
+        key: 'player_death',
+        frames: this.anims.generateFrameNumbers('player_death', {
+            start: 0,
+            end: 14
+        }),
+        frameRate: 10,
+        repeat: 0
+    });
+
     // Add the player to the scene
-    this.player = this.physics.add.sprite(100, 100, 'player_idle');
-    this.player.setDepth(1);
+    player = this.physics.add.sprite(100, 100, 'player_idle');
+    player.setDepth(1);
 
     //Set Player Position
-    this.player.x = 20 + (this.player.width / 2);
-    this.player.y = gameHeight - this.player.height - 10;
+    player.x = 20 + (player.width / 2);
+    player.y = gameHeight - player.height - 10;
 
     //Set Player Scale
-    this.player.setScale(1.7);
-    this.player.setBodySize(32, 32);
-    this.player.setOffset(16, 12);
+    player.setScale(1.7);
+    player.setBodySize(32, 32);
+    player.setOffset(16, 12);
 
     //Play Idle Animation
-    this.player.play('player_idle');
+    player.play('player_idle');
 
     //Set Player Gravity
-    this.player.body.setGravityY(400);
+    player.body.setGravityY(400);
 
     //Set Colliders
-    this.physics.add.collider(this.player, this.grassGroup);
+    this.physics.add.collider(player, this.grassGroup);
 
     //Prevent Player from leaving the screen
-    this.player.setCollideWorldBounds(true);
+    player.setCollideWorldBounds(true);
 
     //NECROMANCER
     //Create Idle Animation for Necromancer
@@ -262,50 +319,50 @@ gameScene.create = function () {
 
     //NECROMANCER 1
     // Add the Necromancer to the scene
-    this.necromancer1 = this.physics.add.sprite(50, 100, 'necromancer_idle');
-    this.necromancer1.setDepth(1);
+    necromancer1 = this.physics.add.sprite(50, 100, 'necromancer_idle');
+    necromancer1.setDepth(1);
 
     //Set Necromancer Scale
-    this.necromancer1.setScale(1.7);
-    this.necromancer1.setBodySize(32, 52);
-    this.necromancer1.setOffset(32, 12);
+    necromancer1.setScale(1.7);
+    necromancer1.setBodySize(32, 52);
+    necromancer1.setOffset(32, 12);
 
 
     //Play Idle Animation
-    this.necromancer1.play('necromancer_idle');
+    necromancer1.play('necromancer_idle');
 
     //Set Necromancer Gravity
-    this.necromancer1.body.setGravityY(300);
+    necromancer1.body.setGravityY(300);
 
     //Set Colliders
-    this.physics.add.collider(this.necromancer1, this.grassGroup);
+    this.physics.add.collider(necromancer1, this.grassGroup);
 
     //Prevent Necromancer from leaving the screen
-    this.necromancer1.setCollideWorldBounds(true);
+    necromancer1.setCollideWorldBounds(true);
 
     //NECROMANCER 2
     // Add the Necromancer to the scene
-    this.necromancer2 = this.physics.add.sprite(gameWidth - 50, gameHeight - 250, 'necromancer_idle');
-    this.necromancer2.flipX = true;
-    this.necromancer2.setDepth(1);
+    necromancer2 = this.physics.add.sprite(gameWidth - 50, gameHeight - 250, 'necromancer_idle');
+    necromancer2.flipX = true;
+    necromancer2.setDepth(1);
 
     //Set Necromancer Scale
-    this.necromancer2.setScale(1.7);
-    this.necromancer2.setBodySize(32, 52);
-    this.necromancer2.setOffset(32, 12);
+    necromancer2.setScale(1.7);
+    necromancer2.setBodySize(32, 52);
+    necromancer2.setOffset(32, 12);
 
 
     //Play Idle Animation
-    this.necromancer2.play('necromancer_idle');
+    necromancer2.play('necromancer_idle');
 
     //Set Necromancer Gravity
-    this.necromancer2.body.setGravityY(300);
+    necromancer2.body.setGravityY(300);
 
     //Set Colliders
-    this.physics.add.collider(this.necromancer2, this.grassGroup);
+    this.physics.add.collider(necromancer2, this.grassGroup);
 
     //Prevent Necromancer from leaving the screen
-    this.necromancer2.setCollideWorldBounds(true);
+    necromancer2.setCollideWorldBounds(true);
 
     //PALADIN
     //Create Idle Animation for Paladin
@@ -332,87 +389,144 @@ gameScene.create = function () {
 
     //PALADIN1
     // Add the Paladin to the scene
-    this.paladin1 = this.physics.add.sprite(50, gameHeight - 350, 'paladin_idle');
-    this.paladin1.setDepth(1);
+    paladin1 = this.physics.add.sprite(50, gameHeight - 350, 'paladin_idle');
+    paladin1.setDepth(1);
 
     //Set Paladin Scale
-    this.paladin1.setScale(1.7);
-    this.paladin1.setBodySize(40, 50);
-    this.paladin1.setOffset(45, 15);
+    paladin1.setScale(1.7);
+    paladin1.setBodySize(40, 50);
+    paladin1.setOffset(45, 15);
 
 
     //Play Idle Animation
-    this.paladin1.play('paladin_idle');
+    paladin1.play('paladin_idle');
 
     //Set paladin Gravity
-    this.paladin1.body.setGravityY(300);
+    paladin1.body.setGravityY(300);
 
     //Set Colliders
-    this.physics.add.collider(this.paladin1, this.grassGroup);
+    this.physics.add.collider(paladin1, this.grassGroup);
 
     //Prevent Paladin from leaving the screen
-    this.paladin1.setCollideWorldBounds(true);
+    paladin1.setCollideWorldBounds(true);
 
     //PALADIN2
     // Add the Paladin to the scene
-    this.paladin2 = this.physics.add.sprite(gameWidth - 200, gameHeight - 500, 'paladin_idle');
-    this.paladin2.flipX = true;
-    this.paladin2.setDepth(1);
+    paladin2 = this.physics.add.sprite(gameWidth - 200, gameHeight - 500, 'paladin_idle');
+    paladin2.flipX = true;
+    paladin2.setDepth(1);
 
     //Set Paladin Scale
-    this.paladin2.setScale(1.7);
-    this.paladin2.setBodySize(40, 50);
-    this.paladin2.setOffset(45, 15);
+    paladin2.setScale(1.7);
+    paladin2.setBodySize(40, 50);
+    paladin2.setOffset(45, 15);
 
 
     //Play Idle Animation
-    this.paladin2.play('paladin_idle');
+    paladin2.play('paladin_idle');
 
     //Set paladin Gravity
-    this.paladin2.body.setGravityY(300);
+    paladin2.body.setGravityY(300);
 
     //Set Colliders
-    this.physics.add.collider(this.paladin2, this.grassGroup);
+    this.physics.add.collider(paladin2, this.grassGroup);
 
     //Prevent Paladin from leaving the screen
-    this.paladin2.setCollideWorldBounds(true);
+    paladin2.setCollideWorldBounds(true);
 
+    //BOMB
+    //Add Bomb to the scene
+    bombs = this.physics.add.group();
+    this.physics.add.collider(player, bombs, hitBomb, null, this);
+    this.physics.add.collider(bombs, this.grassGroup);
+
+    //Inittialize Cursor Keys
     this.cursors = this.input.keyboard.createCursorKeys();
+
+    //Initialize bomb timer
+    this.bombDropTimer = this.time.now;
 };
 
 gameScene.update = function (time, delta) {
-    if (this.cursors.left.isDown) {
-        this.player.setOffset(26, 12);
-        this.player.setVelocityX(-200);
-        this.player.flipX = true;
 
-        //If the player is not moving and running animation isn't playing, play the running animation
-        if (this.player.anims.currentAnim.key !== 'player_running') {
-            this.player.play('player_running');
+    //Check whether the player is dead
+    if (gameOver) {
+        //Check whether the player is on the ground
+        if (!player.body.touching.down) {
+            player.setVelocityY(200);
         }
-    }
-    else if (this.cursors.right.isDown) {
-        this.player.setOffset(35, 12);
-        this.player.setVelocityX(200);
-        this.player.flipX = false;
-
-        //If the player is not moving and running animation isn't playing, play the running animation
-        if (this.player.anims.currentAnim.key !== 'player_running') {
-            this.player.play('player_running');
+        else {
+            this.physics.pause();
+            if (player.anims.currentAnim.key !== 'player_death') {
+                player.play('player_death');
+            }
         }
+        return;
     }
     else {
-        this.player.setOffset(16, 12);
-        this.player.setVelocityX(0);
+        //Check whether keys are pressed
+        if (this.cursors.left.isDown) {
+            player.setOffset(26, 12);
+            player.setVelocityX(-200);
+            player.flipX = true;
 
-        //If the player is not moving and idle animation isn't playing, play the idle animation
-        if (this.player.anims.currentAnim.key !== 'player_idle') {
-            this.player.play('player_idle');
+            //If the player is not moving and running animation isn't playing, play the running animation
+            if (player.anims.currentAnim.key !== 'player_running') {
+                player.play('player_running');
+            }
+        }
+        else if (this.cursors.right.isDown) {
+            player.setOffset(35, 12);
+            player.setVelocityX(200);
+            player.flipX = false;
+
+            //If the player is not moving and running animation isn't playing, play the running animation
+            if (player.anims.currentAnim.key !== 'player_running') {
+                player.play('player_running');
+            }
+        }
+        else {
+            player.setOffset(16, 12);
+            player.setVelocityX(0);
+
+            //If the player is not moving and idle animation isn't playing, play the idle animation
+            if (player.anims.currentAnim.key !== 'player_idle') {
+                player.play('player_idle');
+            }
+        }
+
+        //Check whether the player is on the ground and the up key is pressed
+        if (this.cursors.up.isDown && player.body.touching.down) {
+            player.setVelocityY(-360);
+        }
+
+        // Check if 5 seconds have passed since the last bomb drop
+        if (time > this.bombDropTimer + 5000) {
+            dropBomb();
+            this.bombDropTimer = time; // Update the last bomb drop time
         }
     }
+}
 
-    if (this.cursors.up.isDown && this.player.body.touching.down) {
-        this.player.setVelocityY(-360);
+//Called when the player is hit by a bomb
+function hitBomb(player, bomb) {
+    player.setTint(0xff0000);
+    gameOver = true;
+
+    //Create explosion animation
+    bomb.play('explosion');
+
+}
+
+//Called after set time interval to drop a bomb
+function dropBomb() {
+    var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+
+    if (bombs.children.getArray().filter(bomb => bomb.active).length < 7) {
+        var bomb = bombs.create(x, 16, 'bomb');
+        bomb.setBounce(1);
+        bomb.setCollideWorldBounds(true);
+        bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
     }
 }
 
