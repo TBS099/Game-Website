@@ -34,9 +34,23 @@ gameScene.preload = function () {
         frameHeight: 96
     });
 
+    //Walking
     this.load.spritesheet('necromancer_walk', '.././assets/Enemies/Necromancer/Necromancer_walk.png', {
         frameWidth: 96,
         frameHeight: 96
+    });
+
+    //Paladin
+    //Idle
+    this.load.spritesheet('paladin_idle', '.././assets/Enemies/Paladin/Paladin_Idle.png', {
+        frameWidth: 128,
+        frameHeight: 128
+    });
+
+    //Walking
+    this.load.spritesheet('paladin_walk', '.././assets/Enemies/Paladin/Paladin_Walk.png', {
+        frameWidth: 128,
+        frameHeight: 128
     });
 };
 
@@ -175,6 +189,7 @@ gameScene.create = function () {
     this.physics.add.existing(grassRightBlock4, true);
     this.grassGroup.add(grassRightBlock4);
 
+    //PLAYER
     //Create Idle Animation for Player
     this.anims.create({
         key: 'player_idle',
@@ -222,6 +237,7 @@ gameScene.create = function () {
     //Prevent Player from leaving the screen
     this.player.setCollideWorldBounds(true);
 
+    //NECROMANCER
     //Create Idle Animation for Necromancer
     this.anims.create({
         key: 'necromancer_idle',
@@ -233,6 +249,7 @@ gameScene.create = function () {
         repeat: -1
     });
 
+    //Create Movement Animation for Necromancer
     this.anims.create({
         key: 'necromancer_walk',
         frames: this.anims.generateFrameNumbers('necromancer_walk', {
@@ -243,18 +260,15 @@ gameScene.create = function () {
         repeat: -1
     });
 
+    //NECROMANCER 1
     // Add the Necromancer to the scene
-    this.necromancer1 = this.physics.add.sprite(100, 100, 'necromancer_idle');
+    this.necromancer1 = this.physics.add.sprite(50, 100, 'necromancer_idle');
     this.necromancer1.setDepth(1);
-
-    //Set Necromancer Position
-    this.necromancer1.x = 20 + (this.necromancer1.width / 2);
-    this.necromancer1.y = gameHeight - this.necromancer1.height - 10;
 
     //Set Necromancer Scale
     this.necromancer1.setScale(1.7);
-    this.necromancer1.setBodySize(32, 64);
-    this.necromancer1.setOffset(32, 0);
+    this.necromancer1.setBodySize(32, 52);
+    this.necromancer1.setOffset(32, 12);
 
 
     //Play Idle Animation
@@ -268,6 +282,100 @@ gameScene.create = function () {
 
     //Prevent Necromancer from leaving the screen
     this.necromancer1.setCollideWorldBounds(true);
+
+    //NECROMANCER 2
+    // Add the Necromancer to the scene
+    this.necromancer2 = this.physics.add.sprite(gameWidth - 50, gameHeight - 250, 'necromancer_idle');
+    this.necromancer2.flipX = true;
+    this.necromancer2.setDepth(1);
+
+    //Set Necromancer Scale
+    this.necromancer2.setScale(1.7);
+    this.necromancer2.setBodySize(32, 52);
+    this.necromancer2.setOffset(32, 12);
+
+
+    //Play Idle Animation
+    this.necromancer2.play('necromancer_idle');
+
+    //Set Necromancer Gravity
+    this.necromancer2.body.setGravityY(300);
+
+    //Set Colliders
+    this.physics.add.collider(this.necromancer2, this.grassGroup);
+
+    //Prevent Necromancer from leaving the screen
+    this.necromancer2.setCollideWorldBounds(true);
+
+    //PALADIN
+    //Create Idle Animation for Paladin
+    this.anims.create({
+        key: 'paladin_idle',
+        frames: this.anims.generateFrameNumbers('paladin_idle', {
+            start: 0,
+            end: 26
+        }),
+        frameRate: 20,
+        repeat: -1
+    });
+
+    //Create Movement Animation for Paladin
+    this.anims.create({
+        key: 'paladin_walk',
+        frames: this.anims.generateFrameNumbers('paladin_walk', {
+            start: 0,
+            end: 9
+        }),
+        frameRate: 20,
+        repeat: -1
+    });
+
+    //PALADIN1
+    // Add the Paladin to the scene
+    this.paladin1 = this.physics.add.sprite(50, gameHeight - 350, 'paladin_idle');
+    this.paladin1.setDepth(1);
+
+    //Set Paladin Scale
+    this.paladin1.setScale(1.7);
+    this.paladin1.setBodySize(40, 50);
+    this.paladin1.setOffset(45, 15);
+
+
+    //Play Idle Animation
+    this.paladin1.play('paladin_idle');
+
+    //Set paladin Gravity
+    this.paladin1.body.setGravityY(300);
+
+    //Set Colliders
+    this.physics.add.collider(this.paladin1, this.grassGroup);
+
+    //Prevent Paladin from leaving the screen
+    this.paladin1.setCollideWorldBounds(true);
+
+    //PALADIN2
+    // Add the Paladin to the scene
+    this.paladin2 = this.physics.add.sprite(gameWidth - 200, gameHeight - 500, 'paladin_idle');
+    this.paladin2.flipX = true;
+    this.paladin2.setDepth(1);
+
+    //Set Paladin Scale
+    this.paladin2.setScale(1.7);
+    this.paladin2.setBodySize(40, 50);
+    this.paladin2.setOffset(45, 15);
+
+
+    //Play Idle Animation
+    this.paladin2.play('paladin_idle');
+
+    //Set paladin Gravity
+    this.paladin2.body.setGravityY(300);
+
+    //Set Colliders
+    this.physics.add.collider(this.paladin2, this.grassGroup);
+
+    //Prevent Paladin from leaving the screen
+    this.paladin2.setCollideWorldBounds(true);
 
     this.cursors = this.input.keyboard.createCursorKeys();
 };
