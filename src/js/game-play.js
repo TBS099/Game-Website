@@ -37,6 +37,12 @@ gameScene.preload = function () {
         frameHeight: 64
     });
 
+    //Attack
+    this.load.spritesheet('player_attack', '.././assets/Player/Player_Attack.png', {
+        frameWidth: 144,
+        frameHeight: 64
+    });
+
     //Death
     this.load.spritesheet('player_death', '.././assets/Player/Player_Death.png', {
         frameWidth: 96,
@@ -57,6 +63,24 @@ gameScene.preload = function () {
         frameHeight: 96
     });
 
+    //Attack
+    this.load.spritesheet('necromancer_attack', '.././assets/Enemies/Necromancer/Necromancer_Attack.png', {
+        frameWidth: 128,
+        frameHeight: 128
+    });
+
+    //Get Hit
+    this.load.spritesheet('necromancer_getHit', '.././assets/Enemies/Necromancer/Necromancer_GetHit.png', {
+        frameWidth: 96,
+        frameHeight: 96
+    });
+
+    //Death
+    this.load.spritesheet('necromancer_death', '.././assets/Enemies/Necromancer/Necromancer_Death.png', {
+        frameWidth: 96,
+        frameHeight: 96
+    });
+
     //Paladin
     //Idle
     this.load.spritesheet('paladin_idle', '.././assets/Enemies/Paladin/Paladin_Idle.png', {
@@ -66,6 +90,24 @@ gameScene.preload = function () {
 
     //Walking
     this.load.spritesheet('paladin_walk', '.././assets/Enemies/Paladin/Paladin_Walk.png', {
+        frameWidth: 128,
+        frameHeight: 128
+    });
+
+    //Attack
+    this.load.spritesheet('paladin_attack', '.././assets/Enemies/Paladin/Paladin_Attack.png', {
+        frameWidth: 128,
+        frameHeight: 128
+    });
+
+    //Get Hit
+    this.load.spritesheet('paladin_getHit', '.././assets/Enemies/Paladin/Paladin_GetHit.png', {
+        frameWidth: 128,
+        frameHeight: 128
+    });
+
+    //Death
+    this.load.spritesheet('paladin_death', '.././assets/Enemies/Paladin/Paladin_Death.png', {
         frameWidth: 128,
         frameHeight: 128
     });
@@ -258,6 +300,17 @@ gameScene.create = function () {
         repeat: -1
     });
 
+    //Create Attack Animation for Player
+    this.anims.create({
+        key: 'player_attack',
+        frames: this.anims.generateFrameNumbers('player_attack', {
+            start: 0,
+            end: 21
+        }),
+        frameRate: 20,
+        repeat: 0
+    });
+
     //Create Death Animation for Player
     this.anims.create({
         key: 'player_death',
@@ -315,6 +368,39 @@ gameScene.create = function () {
         }),
         frameRate: 20,
         repeat: -1
+    });
+
+    //Create Attack Animation for Necromancer
+    this.anims.create({
+        key: 'necromancer_attack',
+        frames: this.anims.generateFrameNumbers('necromancer_attack', {
+            start: 0,
+            end: 46
+        }),
+        frameRate: 20,
+        repeat: 0
+    });
+
+    //Create Get Hit Animation for Necromancer
+    this.anims.create({
+        key: 'necromancer_getHit',
+        frames: this.anims.generateFrameNumbers('necromancer_getHit', {
+            start: 0,
+            end: 8
+        }),
+        frameRate: 20,
+        repeat: 0
+    });
+
+    //Create Death Animation for Necromancer
+    this.anims.create({
+        key: 'necromancer_death',
+        frames: this.anims.generateFrameNumbers('necromancer_death', {
+            start: 0,
+            end: 51
+        }),
+        frameRate: 20,
+        repeat: 0
     });
 
     //NECROMANCER 1
@@ -385,6 +471,39 @@ gameScene.create = function () {
         }),
         frameRate: 20,
         repeat: -1
+    });
+
+    //Create Attack Animation for Paladin
+    this.anims.create({
+        key: 'paladin_attack',
+        frames: this.anims.generateFrameNumbers('paladin_attack', {
+            start: 0,
+            end: 40
+        }),
+        frameRate: 20,
+        repeat: 0
+    });
+
+    //Create Get Hit Animation for Paladin
+    this.anims.create({
+        key: 'paladin_getHit',
+        frames: this.anims.generateFrameNumbers('paladin_getHit', {
+            start: 0,
+            end: 11
+        }),
+        frameRate: 20,
+        repeat: 0
+    });
+
+    //Create Death Animation for Paladin
+    this.anims.create({
+        key: 'paladin_death',
+        frames: this.anims.generateFrameNumbers('paladin_death', {
+            start: 0,
+            end: 64
+        }),
+        frameRate: 20,
+        repeat: 0
     });
 
     //PALADIN1
