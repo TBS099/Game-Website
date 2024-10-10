@@ -5,7 +5,7 @@ class PreloadScene extends Phaser.Scene {
 
     preload() {
         //Load Background
-        this.load.image('level1', '.././assets/Backgrounds/Background1/game_background_1.png');
+        this.load.image('level1', '.././assets/Backgrounds/game_background_1.png');
 
         //Add Block Images
         this.load.image('grass_left', '.././assets/Blocks/Grass/Grass_Left.png');

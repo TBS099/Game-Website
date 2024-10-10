@@ -1,4 +1,10 @@
 /* CSS START */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 canvas {
     width: 80% !important;
     height: 80vh !important;

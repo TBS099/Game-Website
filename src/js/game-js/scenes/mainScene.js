@@ -8,7 +8,7 @@ class MainScene extends Phaser.Scene {
         this.bombDropTimer = 0;
         this.gameOver = false;
         this.score = 100;
-        this.enemies = 4;
+        this.enemies = 1;
     }
 
     create() {
@@ -206,10 +206,14 @@ class MainScene extends Phaser.Scene {
                 if (enemy.health < 1) {
                     //Play animation, update score and decrement enemy count
                     enemy.isDead = true;
-                    this.score += 10;
+                    this.score += 20;
                     this.enemies -= 1;
                     enemy.play('necromancer_death');
                     enemy.body.enable = false;
+
+                    if (this.enemies === 0) {
+                        this.gameOver = true;
+                    }
                 } else {
                     enemy.health -= 1;
                     enemy.setOffset(32, 12);
@@ -241,12 +245,16 @@ class MainScene extends Phaser.Scene {
                 if (enemy.health < 1) {
                     //Play animation, update score and decrement enemy count
                     enemy.isDead = true;
-                    this.score += 10;
+                    this.score += 20;
                     this.enemies -= 1;
                     enemy.play('paladin_death');
                     enemy.once('animationcomplete', () => {
                         enemy.body.enable = false;
                     });
+
+                    if (this.enemies === 0) {
+                        this.gameOver = true;
+                    }
                 } else {
                     enemy.health -= 1;
                     enemy.play('paladin_getHit');
@@ -313,6 +321,12 @@ class MainScene extends Phaser.Scene {
         if (this.gameOver) {
 
             if (this.enemies === 0) {
+                this.physics.pause();
+                this.player.sprite.setTint(0xffffff);
+                this.time.delayedCall(2000, () => {
+                    this.scene.start('GameOverScene'); // Change to the Game Over scene
+                });
+                return;
             }
             else {
                 //Check whether the player is on the ground

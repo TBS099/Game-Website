@@ -1,7 +1,64 @@
 /* CSS START */
 body {
-    display: flex;
-    justify-content: center;
+    background-image: url("../../assets/Backgrounds/website-background.jpg");
+    background-size: 100%;
+    background-repeat: no-repeat;
 }
 
+/* Game Navbar */
+.game-navbar {
+    width: 100%;
+    background-color: #faf3dd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.game-navbar h2 {
+    margin: 0;
+    width: 200px;
+    text-align: center;
+}
+
+.game-navbar a {
+    text-decoration: none;
+    color: #666;
+}
+
+.game-navbar a:hover {
+    color: #ccc;
+}
+
+.navbar ul {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    list-style-type: none;
+}
+
+.navbar ul li {
+    float: left;
+}
+
+.navbar ul li a {
+    display: block;
+    text-align: center;
+    padding: 25px 35px;
+    text-decoration: none;
+    font-size: 20px;
+    color: #666;
+}
+
+.navbar ul li a:hover {
+    background-color: #ddd;
+    color: #333;
+}
+
+.navbar ul li a.active {
+    color: white;
+    background-color: #04AA6D;
+}
+
+/* Game Navbar END */
 /* CSS END */
