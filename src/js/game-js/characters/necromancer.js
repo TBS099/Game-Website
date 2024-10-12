@@ -7,6 +7,7 @@ class Necromancer {
         this.sprite.setBodySize(32, 52);
         this.sprite.setOffset(32, 12);
 
+        //Set Necromancer properties
         this.sprite.health = 100;
         this.sprite.isAttacking = false;
         this.sprite.isAttacked = false;
@@ -87,6 +88,7 @@ class Necromancer {
         }
 
         if (!this.sprite.isAttacking && !this.sprite.isAttacked) {
+            // Reset sprite
             this.sprite.setOffset(32, 12);
             this.sprite.setBodySize(32, 52);
             this.sprite.play('necromancer_idle', true);

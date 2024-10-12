@@ -105,11 +105,13 @@ class Player {
         this.sprite.play('player_attack', true);
 
         if (this.sprite.flipX) {
+            // Set a delay to modify the offset during the attack animation
             this.scene.time.delayedCall(800, () => {
                 this.sprite.setOffset(30, 12);
             });
         }
         else {
+            // Set a delay to modify the offset during the attack animation
             this.scene.time.delayedCall(800, () => {
                 this.sprite.setOffset(80, 12);
             });

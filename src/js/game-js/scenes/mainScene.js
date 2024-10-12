@@ -193,7 +193,7 @@ class MainScene extends Phaser.Scene {
         this.physics.add.collider(this.player.sprite, this.paladins, this.handleCollisionPaladin.bind(this));
     }
 
-    //Handle Collision for Necromancer and Player
+    //Handle Collision for Necromancer and Player. Keep player for functionality, no use besides that
     handleCollisionNecromancer(player, enemy) {
         if (enemy.isDead) {
             return;
@@ -232,7 +232,7 @@ class MainScene extends Phaser.Scene {
         }
     }
 
-    //Handle Collision for Paladin and Player
+    //Handle Collision for Paladin and Player. Keep player for functionality, no use besides that
     handleCollisionPaladin(player, enemy) {
         if (enemy.isDead) {
             return;
@@ -321,6 +321,7 @@ class MainScene extends Phaser.Scene {
         if (this.gameOver) {
 
             if (this.enemies === 0) {
+                //Stop all animations and pause the game
                 this.physics.pause();
                 this.player.sprite.setTint(0xffffff);
                 this.time.delayedCall(2000, () => {
@@ -329,17 +330,18 @@ class MainScene extends Phaser.Scene {
                 return;
             }
             else {
-                //Check whether the player is on the ground
+                //Check whether the player is on the ground. If not, make the player fall
                 if (!this.player.sprite.body.touching.down) {
                     this.player.sprite.setVelocityY(200);
                 }
                 else {
+                    //Stop all animations and pause the game. Play the death animation
                     this.physics.pause();
                     if (this.player.sprite.anims.currentAnim.key !== 'player_death') {
                         this.player.sprite.play('player_death');
                     }
                 }
-
+                //Start Ending Scene after delay
                 this.time.delayedCall(2000, () => {
                     this.scene.start('GameOverScene'); // Change to the Game Over scene
                 });
@@ -352,13 +354,16 @@ class MainScene extends Phaser.Scene {
 
             this.necromancers.children.iterate(necromancer => {
                 if (!necromancer.isDead) {
+                    // Update the necromancer
                     necromancer.update();
 
+                    // Check if the player is in attack range and the necromancer is not already attacking and the necromancer is not dead
                     if (this.isPlayerInAttackRange(necromancer) && !necromancer.isAttacking && necromancer.body.enable) {
                         necromancer.isAttacking = true;
                         necromancer.play('necromancer_attack');
                         necromancer.setOffset(45, 28);
 
+                        // Kill the player if the attack hits
                         this.time.delayedCall(1700, () => {
                             if (this.isPlayerInAttackRange(necromancer) && !this.player.isAttacking) {
                                 this.player.sprite.setTint(0xff0000);
@@ -380,12 +385,15 @@ class MainScene extends Phaser.Scene {
 
             this.paladins.children.iterate(paladin => {
                 if (!paladin.isDead) {
+                    // Update the paladin
                     paladin.update();
+
+                    // Check if the player is in attack range and the paladin is not already attacking and the paladin is not dead
                     if (this.isPlayerInAttackRange(paladin) && !paladin.isAttacking && paladin.body.enable) {
                         paladin.isAttacking = true;
                         paladin.play('paladin_attack');
 
-                        // Set a delay to finish the attack animation before resuming other actions
+                        // Kill the player if the attack hits
                         this.time.delayedCall(1500, () => {
                             if (this.isPlayerInAttackRange(paladin) && !this.player.isAttacking) {
                                 this.player.sprite.setTint(0xff0000);

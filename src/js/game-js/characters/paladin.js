@@ -7,6 +7,7 @@ class Paladin {
         this.sprite.setBodySize(40, 50);
         this.sprite.setOffset(45, 15);
 
+        //Set Paladin properties
         this.sprite.health = 100;
         this.sprite.isAttacking = false;
         this.sprite.isAttacked = false;
@@ -84,6 +85,7 @@ class Paladin {
 
     update() {
         if (!this.isAttacking && !this.isAttacked) {
+            //Reset sprite
             this.sprite.setOffset(16, 12);
             this.sprite.play('paladin_idle', true);
         }

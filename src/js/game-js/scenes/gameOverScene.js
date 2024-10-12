@@ -16,6 +16,7 @@ class GameOverScene extends Phaser.Scene {
         this.add.text(0 + gameWidth / 2 - 125, gameHeight / 2 - 15, `Score: ${score}`, { fontSize: '32px', fill: '#fff' });
         this.add.text(0 + gameWidth / 2 - 200, gameHeight / 2 + 50, 'Press R to Restart', { fontSize: '32px', fill: '#fff' });
 
+        // Restart the game
         this.input.keyboard.on('keydown-R', () => {
             window.location.reload();
         });
