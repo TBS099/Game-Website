@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href=".././src/css/game.css" />
+    <link rel="stylesheet" href=".././src/css/game-registration.css" />
+    <title>Registration</title>
+</head>
+
+<body class="game-body">
+    <div class="game-navbar">
+        <h2><a class="nav-link title" href=".././game-home.html">Game Website</a></h2>
+        <div class="navbar">
+            <ul>
+                <li><a class="nav-link" href="./game-play.html">Game</a></li>
+                <li><a class="nav-link" href="./game-leaderboard.html">Leaderboard</a></li>
+                <li><a class="nav-link" href="./game-profile.html">Profile</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="site-registration">
+        <h1>Game Registration</h1>
+        <form class="registration-form" action="">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required />
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required />
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password"
+                    required />
+            </div>
+            <button type="submit" class="submit-btn">Register</button>
+        </form>
+    </div>
+</body>
+
+</html>

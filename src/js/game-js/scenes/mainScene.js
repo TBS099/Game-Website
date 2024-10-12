@@ -8,7 +8,7 @@ class MainScene extends Phaser.Scene {
         this.bombDropTimer = 0;
         this.gameOver = false;
         this.score = 100;
-        this.enemies = 1;
+        this.enemies = 4;
     }
 
     create() {
