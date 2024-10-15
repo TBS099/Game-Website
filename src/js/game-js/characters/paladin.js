@@ -27,19 +27,6 @@ class Paladin {
             });
         }
 
-        //Create Movement Animation for Paladin
-        if (!this.scene.anims.exists('paladin_walk')) {
-            this.scene.anims.create({
-                key: 'paladin_walk',
-                frames: this.scene.anims.generateFrameNumbers('paladin_walk', {
-                    start: 0,
-                    end: 9
-                }),
-                frameRate: 20,
-                repeat: -1
-            });
-        }
-
         //Create Attack Animation for Paladin
         if (!this.scene.anims.exists('paladin_attack')) {
             this.scene.anims.create({

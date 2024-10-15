@@ -74,5 +74,38 @@ body {
     background-color: #04AA6D;
 }
 
+#hide-logout {
+    cursor: pointer;
+}
+
 /* Game Navbar END */
+/* Form Message CSS */
+#form-message {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+#form-message .message {
+    font-size: 15px;
+    margin-bottom: 10px;
+    padding: 13px;
+    border-radius: 5px;
+    width: 80%;
+    text-align: center;
+}
+
+.error.message {
+    background-color: #f8d7da;
+    border: #721c24 2px solid;
+    color: #721c24;
+}
+
+.success.message {
+    background-color: #d4edda;
+    border: #155724 2px solid;
+    color: #155724;
+}
+
+/* Form Message CSS END */
 /* CSS END */

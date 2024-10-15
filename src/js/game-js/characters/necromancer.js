@@ -26,19 +26,6 @@ class Necromancer {
             });
         }
 
-        //Create Movement Animation for Necromancer
-        if (!this.scene.anims.exists('necromancer_walk')) {
-            this.scene.anims.create({
-                key: 'necromancer_walk',
-                frames: this.scene.anims.generateFrameNumbers('necromancer_walk', {
-                    start: 0,
-                    end: 9
-                }),
-                frameRate: 20,
-                repeat: -1
-            });
-        }
-
         //Create Attack Animation for Necromancer
         if (!this.scene.anims.exists('necromancer_attack')) {
             this.scene.anims.create({

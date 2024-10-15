@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href=".././src/css/game.css" />
     <link rel="stylesheet" href=".././src/css/game-registration.css" />
+    <script type="module" src="../src/js/game-main.js"></script>
     <title>Registration</title>
 </head>
 <!--Body-->
@@ -18,16 +19,21 @@
             <ul>
                 <li><a class="nav-link" href="./game-play.html">Game</a></li>
                 <li><a class="nav-link" href="./game-leaderboard.html">Leaderboard</a></li>
-                <li><a class="nav-link" href="./game-profile.html">Profile</a></li>
+                <li id="hide-register"><a class="nav-link" href="./game-registration.html">Register</a></li>
+                <li>
+                    <a class="nav-link" id="hide-login" href="./game-login.html">Log In</a>
+                    <a class="nav-link" id="hide-logout">Log Out</a>
+                </li>
             </ul>
         </div>
     </div>
     <!--Horizontal Navbar End-->
     <!--Registration Div-->
     <div class="site-registration">
-        <h1>Game Registration</h1>
+        <h1 id="form-title">Game Registration</h1>
         <!--Registration Form-->
-        <form class="registration-form" action="">
+        <form class="registration-form" id="game-registration-form" action="">
+            <div id="form-message"></div>
             <!-- Username Form Group-->
             <div class="form-group">
                 <label for="username">Username</label>
@@ -49,7 +55,7 @@
                 <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password"
                     required />
             </div>
-            <button type="submit" class="submit-btn">Register</button>
+            <button type="submit" class="submit-btn" id="submit-btn">Register</button>
         </form>
         <!--Registration Form End-->
     </div>

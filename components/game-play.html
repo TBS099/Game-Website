@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="../src/css/game-play.css" />
     <script src="../src/js/phaser.min.js"></script>
     <script type="module" src="../src/js/game-js/game-play.js"></script>
+    <script type="module" src="../src/js/game-main.js"></script>
     <title>Game Page</title>
 </head>
 <!--Body-->
@@ -20,7 +21,11 @@
             <ul>
                 <li><a class="nav-link" href="./game-play.html">Game</a></li>
                 <li><a class="nav-link" href="./game-leaderboard.html">Leaderboard</a></li>
-                <li><a class="nav-link" href="./game-profile.html">Profile</a></li>
+                <li id="hide-register"><a class="nav-link" href="./game-registration.html">Register</a></li>
+                <li>
+                    <a class="nav-link" id="hide-login" href="./game-login.html">Log In</a>
+                    <a class="nav-link" id="hide-logout">Log Out</a>
+                </li>
             </ul>
         </div>
     </div>

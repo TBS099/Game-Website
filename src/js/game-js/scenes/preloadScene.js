@@ -46,12 +46,6 @@ class PreloadScene extends Phaser.Scene {
             frameHeight: 96
         });
 
-        //Walking
-        this.load.spritesheet('necromancer_walk', '.././assets/Enemies/Necromancer/Necromancer_walk.png', {
-            frameWidth: 96,
-            frameHeight: 96
-        });
-
         //Attack
         this.load.spritesheet('necromancer_attack', '.././assets/Enemies/Necromancer/Necromancer_Attack.png', {
             frameWidth: 128,
@@ -73,12 +67,6 @@ class PreloadScene extends Phaser.Scene {
         //Paladin
         //Idle
         this.load.spritesheet('paladin_idle', '.././assets/Enemies/Paladin/Paladin_Idle.png', {
-            frameWidth: 128,
-            frameHeight: 128
-        });
-
-        //Walking
-        this.load.spritesheet('paladin_walk', '.././assets/Enemies/Paladin/Paladin_Walk.png', {
             frameWidth: 128,
             frameHeight: 128
         });

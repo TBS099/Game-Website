@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="src/css/game.css" />
     <link rel="stylesheet" href="src/css/game-home.css" />
+    <script type="module" src="src/js/game-main.js"></script>
     <title>Game Website</title>
 </head>
 <!--Body-->
@@ -22,8 +23,12 @@
             <li>
                 <h1><a class="nav-link" href="components/game-leaderboard.html">Leaderboard</a></h1>
             </li>
+            <li id="hide-register">
+                <h1><a class="nav-link" href="components/game-registration.html">Register</a></h1>
+            </li>
             <li>
-                <h1><a class="nav-link" href="components/game-profile.html">Profile</a></h1>
+                <h1 id="hide-login"><a class="nav-link" href="components/game-login.html">Log In</a></h1>
+                <h1 id="hide-logout"><a class="nav-link">Log Out</a></h1>
             </li>
         </ul>
     </div>

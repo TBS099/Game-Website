@@ -14,8 +14,9 @@
     margin-bottom: 50px
 }
 
+/* Form CSS */
 .site-registration .registration-form {
-    width: 80%;
+    width: 90%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -58,4 +59,5 @@
     box-shadow: 0 0 0 2px white, 0 0 0 3px #27AE60;
 }
 
+/* Form CSS End*/
 /*CSS END*/
