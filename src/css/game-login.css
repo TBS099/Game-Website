@@ -25,13 +25,13 @@
 
 .game-login .login-form .form-group label {
     font-size: 20px;
-    margin-bottom: 5px;
 }
 
 .game-login .login-form .form-group input {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid #ddd;
+    margin-top: 10px;
     margin-bottom: 40px;
     width: 100%;
 }
