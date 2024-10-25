@@ -15,7 +15,7 @@
 
 @font-face {
     font-family: 'Tronica Mono';
-    src: url('../../assets/fonts/Tronica_Mono.ttf') format('truetype');
+    src: url('../fonts/Tronica_Mono.ttf') format('truetype');
 }
 
 body {
