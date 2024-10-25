@@ -90,6 +90,7 @@ function register_user(formId, submit_btnId, messageId, titleId) {
     const form_title = document.getElementById(titleId);
     const postcodeRegEx = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1} ?[0-9][A-Z]{2}$/i;
     const passwordRegex = /^(?=.*[0-9]).*$/;
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // Function to validate form data
     function validation(username, password, confirm_password, email, postcode) {
@@ -128,6 +129,11 @@ function register_user(formId, submit_btnId, messageId, titleId) {
             const existingUser = JSON.parse(localStorage.getItem(localStorage.key(i)));
             if (existingUser.email === email) {
                 show_feedback_message('error', 'Email already in use', form_title, form_message);
+                return false;
+            }
+
+            if (emailPattern.test(email) === false) {
+                show_feedback_message('error', 'Invalid email format', form_title, form_message);
                 return false;
             }
         }
