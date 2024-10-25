@@ -1,4 +1,18 @@
 /* CSS START */
+:root {
+    --font-color: #666;
+    --bg-color: #faf3dd;
+    --hover-bg-color: #ddd;
+    --hover-font-color: #333;
+    --submit-bg-color: #27AE60;
+    --submit-font-color: white;
+    --input-border-color: #ddd;
+    --error-bg-color: #f8d7da;
+    --error-color: #721c24;
+    --success-bg-color: #d4edda;
+    --success-color: #155724;
+}
+
 @font-face {
     font-family: 'Tronica Mono';
     src: url('../../assets/fonts/Tronica_Mono.ttf') format('truetype');
@@ -14,11 +28,19 @@ body {
     align-items: center;
 }
 
-/* Game Navbar */
+.main-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    padding-bottom: 20px;
+}
+
+/* GAME NAVBAR */
 .game-navbar {
-    font-family: 'Tronica Mono', sans-serif;
     width: 100%;
-    background-color: #faf3dd;
+    background-color: var(--bg-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -35,7 +57,7 @@ body {
 
 .game-navbar a {
     text-decoration: none;
-    color: #666;
+    color: var(--font-color);
 }
 
 .navbar ul {
@@ -55,31 +77,154 @@ body {
     padding: 25px 35px;
     text-decoration: none;
     font-size: 20px;
-    color: #666;
+    color: var(--font-color);
 }
 
 .navbar ul li a:hover {
-    background-color: #ddd;
-    color: #333;
+    background-color: var(--hover-bg-color);
+    color: var(--hover-font-color);
 }
 
 .navbar ul li:last-child a:hover {
-    background-color: #ddd;
-    color: #333;
+    background-color: var(--hover-bg-color);
+    color: var(--hover-font-color);
     border-radius: 0 10px 10px 0;
-}
-
-.navbar ul li a.active {
-    color: white;
-    background-color: #04AA6D;
 }
 
 #hide-logout {
     cursor: pointer;
 }
 
-/* Game Navbar END */
-/* Form Message CSS */
+/* GAME NAVBAR END */
+/* GAME CSS START */
+canvas {
+    width: 80% !important;
+    height: 80vh !important;
+}
+
+/* GAME CSS END */
+/*HOME CSS START*/
+.website-name {
+    font-size: 70px;
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+
+.main-navbar {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--bg-color);
+    opacity: 0.8;
+    border-radius: 10px;
+    padding-bottom: 10px;
+}
+
+.main-navbar ul {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.main-navbar ul li {
+    width: 400px;
+    margin-bottom: 50px;
+}
+
+.main-navbar ul li a {
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #000;
+}
+
+.main-navbar ul li:last-child {
+    margin-bottom: 0;
+}
+
+.main-navbar ul li a:hover {
+    background-color: #f0e6c8;
+}
+
+/*HOME CSS END*/
+/*LEADERBOARD CSS START*/
+.game-leaderboard {
+    width: 40%;
+    opacity: 0.8;
+}
+
+.game-leaderboard ol {
+    list-style: none;
+    padding: 0;
+}
+
+.game-leaderboard ol li {
+    width: 400px;
+    border-bottom: 1px solid var(--input-border-color);
+}
+
+.game-leaderboard ol li .leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.game-leaderboard ol li:last-child {
+    border-bottom: none;
+}
+
+.game-leaderboard ol li .player-name {
+    flex: 1;
+    font-weight: bold;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 210px;
+
+}
+
+.game-leaderboard ol li .player-score {
+    text-align: right;
+    color: var(--font-color);
+}
+
+/*LEADERBOARD CSS END*/
+/*LOGIN CSS START*/
+.game-login {
+    margin-top: 50px;
+    width: 30%;
+
+}
+
+.game-login h1 {
+    margin-top: 30px;
+    margin-bottom: 50px
+}
+
+.game-login .login-form {
+    width: 80%;
+}
+
+/* LOGIN CSS End */
+/*REGISTRATION CSS START*/
+.site-registration {
+    width: 40%;
+
+}
+
+.site-registration h1 {
+    margin-top: 30px;
+    margin-bottom: 50px
+}
+
+.site-registration .registration-form {
+    width: 90%;
+}
+
+/*REGISTRATION CSS END*/
+/* FORM MESSAGE CSS */
 #form-message {
     width: 100%;
     display: flex;
@@ -96,16 +241,63 @@ body {
 }
 
 .error.message {
-    background-color: #f8d7da;
-    border: #721c24 2px solid;
-    color: #721c24;
+    background-color: var(--error-bg-color);
+    border: var(--error-color) 2px solid;
+    color: var(--error-color);
 }
 
 .success.message {
-    background-color: #d4edda;
-    border: #155724 2px solid;
-    color: #155724;
+    background-color: var(--success-bg-color);
+    border: var(--success-color) 2px solid;
+    color: var(--success-color);
 }
 
-/* Form Message CSS END */
+/* FORM MESSAGE CSS END */
+/* FORM CSS */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+form .form-group {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin-bottom: 30px;
+}
+
+form .form-group label {
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+
+.form-group input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid var(--input-border-color);
+    margin-top: 5px;
+    width: 100%;
+}
+
+.submit-btn {
+    width: 100px;
+    background: var(--submit-bg-color);
+    font-weight: bold;
+    color: var(--submit-font-color);
+    border: 0 none;
+    border-radius: 1px;
+    cursor: pointer;
+    padding: 10px;
+    margin: 10px 5px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.submit-btn:hover,
+.submit-btn:focus {
+    box-shadow: 0 0 0 2px var(--submit-font-color), 0 0 0 3px var(--submit-bg-color);
+}
+
+/* FORM CSS END */
 /* CSS END */

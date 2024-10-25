@@ -12,10 +12,11 @@ function show_feedback_message(type, message, form_title, form_message) {
 }
 
 // Function to save user data to localStorage
-function save_data(username, password, email, high_score) {
+function save_data(username, password, email, postcode, high_score) {
     const user_data = {
         password: password,
         email: email,
+        postcode: postcode,
         high_score: high_score
     };
     localStorage.setItem(username, JSON.stringify(user_data));
@@ -87,11 +88,18 @@ function register_user(formId, submit_btnId, messageId, titleId) {
     const submit_btn = document.getElementById(submit_btnId);
     const form_message = document.getElementById(messageId);
     const form_title = document.getElementById(titleId);
+    const postcodeRegEx = /^[A-Z]{1,2}[0-9]{1,2}[A-Z]{0,1} ?[0-9][A-Z]{2}$/i;
+    const passwordRegex = /^(?=.*[0-9]).*$/;
 
     // Function to validate form data
-    function validation(username, password, confirm_password, email) {
-        if (username === '' || password === '' || confirm_password === '' || email === '') {
+    function validation(username, password, confirm_password, email, postcode) {
+        if (username === '' || password === '' || confirm_password === '' || email === '' || postcode === '') {
             show_feedback_message('error', 'All fields are required', form_title, form_message);
+            return false;
+        }
+
+        if (postcodeRegEx.test(postcode) === false) {
+            show_feedback_message('error', 'Invalid postcode', form_title, form_message);
             return false;
         }
 
@@ -105,7 +113,7 @@ function register_user(formId, submit_btnId, messageId, titleId) {
             return false;
         }
         else {
-            if (!password_checker(password)) {
+            if (passwordRegex.test(password) === false) {
                 show_feedback_message('error', 'Password must contain at least 1 number', form_title, form_message);
                 return false;
             }
@@ -143,11 +151,12 @@ function register_user(formId, submit_btnId, messageId, titleId) {
             const password = document.getElementById('password').value;
             const confirm_password = document.getElementById('confirm-password').value;
             const email = document.getElementById('email').value;
+            const postcode = document.getElementById('postcode').value;
 
             // Validate form data
-            if (validation(username, password, confirm_password, email)) {
+            if (validation(username, password, confirm_password, email, postcode)) {
                 // Save user data to localStorage
-                save_data(username, password, email, 0);
+                save_data(username, password, email, postcode, 0);
 
                 // Show success message
                 show_feedback_message('success', 'Registration successful', form_title, form_message);
