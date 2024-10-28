@@ -46,7 +46,7 @@ function user_login(submit_btnId, form_message, form_title) {
 
                 // Redirect to a specific URL after a second
                 setTimeout(function () {
-                    window.location.href = '.././game-home.html'; // Redirects to the given HTML page
+                    window.location.href = '.././index.html'; // Redirects to the given HTML page
                 }, 1000);
             } else {
                 show_feedback_message('error', 'Invalid username or password', formTitle, formMessage);
@@ -77,7 +77,7 @@ function logout() {
         document.getElementById('hide-logout').addEventListener('click', function (event) {
             event.preventDefault();
             sessionStorage.removeItem('logged_in_user');
-            window.location.href = '.././game-home.html'; // Redirects to the given html page
+            window.location.href = '.././index.html'; // Redirects to the given html page
         });
     }
 }
@@ -172,7 +172,7 @@ function register_user(formId, submit_btnId, messageId, titleId) {
 
                 // Redirect to a specific URL after a second
                 setTimeout(function () {
-                    window.location.href = '.././game-home.html'; // Redirects to the given html page
+                    window.location.href = '.././index.html'; // Redirects to the given html page
                 }, 1000);
             }
         });
