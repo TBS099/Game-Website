@@ -90,7 +90,7 @@ class PreloadScene extends Phaser.Scene {
         });
 
         //Bomb
-        this.load.image('bomb', '.././assets/Items/Bomb.png');
+        this.load.image('bomb', '.././assets/Items/bomb.png');
 
         //Explosion
         this.load.image('explosion1', '.././assets/Explosion/explosion1.png');
