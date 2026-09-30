@@ -1,6 +1,6 @@
 # 🎮 Game Website
 
-A platform game website created for a university assessment. Built using **HTML**, **CSS**, and **JavaScript**, and powered by the **Phaser.js** game engine. Demo the game [here](https://delightful-sky-0d6f53503.6.azurestaticapps.net/).
+A platform game website created for a university assessment. Built using **HTML**, **CSS**, and **JavaScript**, and powered by the **Phaser.js** game engine. Demo the game [here](https://swordbound.tanushbikramshah.com.np/).
 
 ## 🌟 Features
 
